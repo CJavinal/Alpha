@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ParallelTask_HPP_INCLUDED
 #define ParallelTask_HPP_INCLUDED
 

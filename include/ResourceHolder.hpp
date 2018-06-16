@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ResourceHolder_HPP_INCLUDED
 #define ResourceHolder_HPP_INCLUDED
 #include <cassert>

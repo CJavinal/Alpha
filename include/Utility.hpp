@@ -1,3 +1,4 @@
+#pragma once
 #ifndef Utility_HPP_INCLUDED
 #define Utility_HPP_INCLUDED
 

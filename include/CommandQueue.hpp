@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CommandQueue_HPP_INCLUDED
 #define CommandQueue_HPP_INCLUDED
 #include "Command.hpp"

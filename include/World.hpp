@@ -1,3 +1,4 @@
+#pragma once
 #ifndef World_HPP_INCLUDED
 #define World_HPP_INCLUDED
 #include "Aircraft.hpp"

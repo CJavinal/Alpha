@@ -1,3 +1,4 @@
+#pragma once
 #ifndef Aircraft_HPP_INCLUDED
 #define Aircraft_HPP_INCLUDED
 #include "Entity.hpp"

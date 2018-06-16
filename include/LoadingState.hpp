@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LoadingState_HPP_INCLUDED
 #define LoadingState_HPP_INCLUDED
 

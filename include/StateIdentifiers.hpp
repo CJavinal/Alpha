@@ -1,3 +1,4 @@
+#pragma once
 #ifndef StateIdentifiers_HPP_INCLUDED
 #define StateIdentifiers_HPP_INCLUDED
 

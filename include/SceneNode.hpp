@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SceneNode_HPP_INCLUDED
 #define SceneNode_HPP_INCLUDED
 #include "Category.hpp"

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SpriteNode_HPP_INCLUDED
 #define SpriteNode_HPP_INCLUDED
 #include "SceneNode.hpp"

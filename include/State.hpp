@@ -1,3 +1,4 @@
+#pragma once
 #ifndef State_HPP_INCLUDED
 #define	State_HPP_INCLUDED
 #include "Player.hpp"

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PauseState_HPP_INCLUDED
 #define PauseState_HPP_INCLUDED
 

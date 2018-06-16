@@ -1,3 +1,4 @@
+#pragma once
 #ifndef Category_HPP_INCLUDED
 #define Category_HPP_INCLUDED
 

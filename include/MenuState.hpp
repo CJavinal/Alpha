@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MenuState_HPP_INCLUDED
 #define MenuState_HPP_INCLUDED
 #include "State.hpp"

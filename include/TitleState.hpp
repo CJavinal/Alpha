@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TitleState_HPP_INCLUDED
 #define TitleState_HPP_INCLUDED
 #include "State.hpp"

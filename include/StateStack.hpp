@@ -1,3 +1,4 @@
+#pragma once
 #ifndef StateStack_HPP_INCLUDED
 #define StateStack_HPP_INCLUDED
 #include "State.hpp"

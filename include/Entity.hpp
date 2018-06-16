@@ -1,3 +1,4 @@
+#pragma once
 #ifndef Entity_HPP_INCLUDED
 #define Entity_HPP_INCLUDED
 #include "SceneNode.hpp"

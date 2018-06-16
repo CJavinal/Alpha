@@ -1,22 +1,24 @@
-CC=g++
-CC_FLAGS=-I./include/
-LIB_FLAGS=-lsfml-graphics -lsfml-window -lsfml-system
-OBJECTS=./build/SceneNode.o ./build/Entity.o ./build/Aircraft.o ./build/SpriteNode.o ./build/World.o ./build/CommandQueue.o ./build/Player.o ./build/Game.o ./build/main.o
+CC = g++
+CC_FLAGS = -I./include/
+LIB_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+
+EXEC = eagle
+SOURCES = $(sort $(shell find ./src/ -name '*.cpp'))
+OBJECTS = $(notdir $(SOURCES:.cpp=.o))
+BUILDS = $(addprefix ./build/,$(OBJECTS))
 
 
-all: ./bin/eagle
+#Main target
+$(EXEC) : $(BUILDS)
+	echo compiling
+	$(CC) $(CC_FLAGS) $(BUILDS)  -o $(EXEC) $(LIB_FLAGS)
 
-$(OBJECTS):
-	$(CC) ./include/*.hpp
-	$(CC) -c $(CC_FLAGS) ./src/*.cpp
-	mv *.o ./build/
+$(BUILDS) : $(OBJECTS)
+	cp $(OBJECTS) ./build/
 
-./bin/eagle: $(OBJECTS)
-	$(CC) $(CC_FLAGS) $(OBJECTS) -o ./bin/eagle $(LIB_FLAGS)
-	ln -s ./bin/eagle ./eagle
-
+$(OBJECTS): %.o : $(addprefix ./src/,%.cpp)
+	$(CC) -c $(CC_FLAGS) $< -o $@
+	
+# To remove generated files
 clean:
-	rm ./include/*.gch
-	rm ./build/*
-	rm ./bin/*
-	rm ./eagle
+	rm -f $(EXEC) $(BUILDS)

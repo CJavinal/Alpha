@@ -1,3 +1,4 @@
+#pragma once
 #ifndef Command_HPP_INCLUDED
 #define Command_HPP_INCLUDED
 #include "Category.hpp"

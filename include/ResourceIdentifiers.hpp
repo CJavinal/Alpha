@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ResourceIdentifiers_HPP_INCLUDED
 #define ResourceIdentifiers_HPP_INCLUDED
 
