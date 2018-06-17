@@ -4,21 +4,18 @@ LIB_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 EXEC = eagle
 SOURCES = $(sort $(shell find ./src/ -name '*.cpp'))
-OBJECTS = $(notdir $(SOURCES:.cpp=.o))
-BUILDS = $(addprefix ./build/,$(OBJECTS))
+OBJECTS = $(SOURCES:.cpp=.o)
 
 
 #Main target
-$(EXEC) : $(BUILDS)
+$(EXEC) : $(OBJECTS)
 	echo compiling
-	$(CC) $(CC_FLAGS) $(BUILDS)  -o $(EXEC) $(LIB_FLAGS)
+	$(CC) $(CC_FLAGS) $(OBJECTS)  -o $(EXEC) $(LIB_FLAGS)
 
-$(BUILDS) : $(OBJECTS)
-	cp $(OBJECTS) ./build/
 
-$(OBJECTS): %.o : $(addprefix ./src/,%.cpp)
+$(OBJECTS): %.o : %.cpp
 	$(CC) -c $(CC_FLAGS) $< -o $@
 	
 # To remove generated files
 clean:
-	rm -f $(EXEC) $(BUILDS)
+	rm -f $(EXEC) $(OBJECTS)
