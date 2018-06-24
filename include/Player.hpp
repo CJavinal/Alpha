@@ -17,6 +17,7 @@ class Player {
 			MoveRight,
 			MoveUp,
 			MoveDown,
+			ActionCount
 		};
 
 		void				assignKey(Action action, sf::Keyboard::Key key);
