@@ -12,6 +12,7 @@ namespace Textures {
 	enum ID {
 		Eagle,
 		Raptor,
+		Avenger,
 		Desert,
 		TitleScreen,
 		ButtonNormal,

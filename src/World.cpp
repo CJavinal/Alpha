@@ -7,10 +7,11 @@
 #include <algorithm>
 #include <memory>
 
-World::World(sf::RenderWindow& window)
+World::World(sf::RenderWindow& window, FontHolder& fonts)
 	: mWindow(window)
 	  , mWorldView(window.getDefaultView())
 	  , mTextures()
+	  , mFonts(fonts)
 	  , mSceneGraph()
 	  , mSceneLayers()
 	  , mWorldBounds(0.f, 0.f, mWorldView.getSize().x, 2000.f)
@@ -22,7 +23,7 @@ World::World(sf::RenderWindow& window)
 	loadTextures();
 	buildScene();
 
-	// Prepare the view
+	// Prepare the fontsview
 	mWorldView.setCenter(mSpawnPosition);
 }
 
@@ -52,7 +53,8 @@ void World::buildScene() {
 	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
 	
 	// Setting the playes Aircraft
-	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
+	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures,
+				mFonts));
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
 	mSceneLayers[Air]->attachChild(std::move(leader));
@@ -101,7 +103,7 @@ void World::update(sf::Time dt) {
 	adaptPlayerVelocity();
 
 	// Regular update step, adapt position(correct if outside view)
-	mSceneGraph.update(dt);
+	mSceneGraph.update(dt,mCommandQueue);
 	adaptPlayerPosition();
 	
 }

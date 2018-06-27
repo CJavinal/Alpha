@@ -1,7 +1,7 @@
 #include "Application.hpp"
 #include <stdexcept>
 #include <iostream>
-int main(int argc, char* argv[]) {
+int main() {
 	try {
 		Application app;
 		app.run();

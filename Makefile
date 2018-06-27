@@ -1,8 +1,8 @@
 CC = g++
-CC_FLAGS = -I./include/
+CC_FLAGS = -I./include/ -Wall -Wextra
 LIB_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-EXEC = eagle
+EXEC = ./bin/eagle
 SOURCES = $(sort $(shell find ./src/ -name '*.cpp'))
 OBJECTS = $(SOURCES:.cpp=.o)
 

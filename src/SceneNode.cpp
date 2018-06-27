@@ -1,12 +1,14 @@
 #include "SceneNode.hpp"
 #include "Command.hpp"
+#include "CommandQueue.hpp"
 #include <algorithm>
 #include <cassert>
 
 
-SceneNode::SceneNode() :
-	mChildren(),
-	mParent(nullptr)
+SceneNode::SceneNode(Category::Type category) :
+	mChildren()
+	,	mParent(nullptr)
+	,	mDefaultCategory(category)
 {
 }
 
@@ -48,16 +50,16 @@ void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states)
 }
 
 
-void SceneNode::update(sf::Time dt) {
-	updateCurrent(dt);
-	updateChildren(dt);
+void SceneNode::update(sf::Time dt, CommandQueue& commands) {
+	updateCurrent(dt, commands);
+	updateChildren(dt, commands);
 }
-void SceneNode::updateCurrent(sf::Time) {
+void SceneNode::updateCurrent(sf::Time, CommandQueue& commands) {
 }
 
-void SceneNode::updateChildren(sf::Time dt) {
+void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands) {
 	for(Ptr& child : mChildren) {
-		child->update(dt);
+		child->update(dt,commands);
 	}
 }
 
@@ -76,7 +78,7 @@ sf::Vector2f SceneNode::getWorldPosition() const {
 }
 
 unsigned SceneNode::getCategory() const {
-	return Category::Scene;
+	return mDefaultCategory;
 }
 
 void SceneNode::onCommand(const Command& command, sf::Time dt) {
