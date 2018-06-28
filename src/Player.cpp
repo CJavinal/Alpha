@@ -13,7 +13,7 @@ struct AircraftMover {
 	{
 	}
 
-	void operator() (Aircraft& aircraft, sf::Time dt) const {
+	void operator() (Aircraft& aircraft, sf::Time) const {
 		aircraft.accelerate(velocity);
 	}
 

@@ -22,13 +22,21 @@ class Aircraft : public Entity {
 		virtual void		drawCurrent(sf::RenderTarget& target,
 										sf::RenderStates states) const;
 		virtual void		updateCurrent(sf::Time dt, CommandQueue& commands);
-
+		void				updateMovementPattern(sf::Time dt);
 		virtual unsigned	getCategory() const;
+
+	private:
+		float				getMaxSpeed() const;
+		void				updateTexts();
+
 	
 	private:
 		Type				mType;
 		sf::Sprite			mSprite;
 		TextNode*			mHealthDisplay;
+
+		float				mTravelledDistance;
+		unsigned			mDirectionIndex;
 };
 
 #endif // Aircraft_HPP_INCLUDED

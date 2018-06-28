@@ -38,7 +38,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	drawChildren(target, states);
 }
 
-void SceneNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states)
+void SceneNode::drawCurrent(sf::RenderTarget&, sf::RenderStates)
 		const {
 	// none for now
 }
@@ -54,7 +54,7 @@ void SceneNode::update(sf::Time dt, CommandQueue& commands) {
 	updateCurrent(dt, commands);
 	updateChildren(dt, commands);
 }
-void SceneNode::updateCurrent(sf::Time, CommandQueue& commands) {
+void SceneNode::updateCurrent(sf::Time, CommandQueue&) {
 }
 
 void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands) {
