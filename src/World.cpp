@@ -30,7 +30,16 @@ World::World(sf::RenderWindow& window, FontHolder& fonts)
 void World::loadTextures() {
 	mTextures.load(Textures::Eagle,	"Media/Textures/Eagle.png");
 	mTextures.load(Textures::Raptor,"Media/Textures/Raptor.png");
+	mTextures.load(Textures::Avenger, "Media/Textures/Avenger.png");
 	mTextures.load(Textures::Desert,"Media/Textures/Desert.png");
+
+	mTextures.load(Textures::Bullet, "Media/Textures/Bullet.png");
+	mTextures.load(Textures::Missile, "Media/Textures/Missile.png");
+
+	mTextures.load(Textures::HealthRefill, "Media/Textures/HealthRefill.png");
+	mTextures.load(Textures::MissileRefill, "Media/Textures/MissileRefill.png");
+	mTextures.load(Textures::FireSpread, "Media/Textures/FireSpread.png");
+	mTextures.load(Textures::FireRate, "Media/Textures/FireRate.png");	
 }
 
 void World::buildScene() {
@@ -59,6 +68,32 @@ void World::buildScene() {
 	mPlayerAircraft->setPosition(mSpawnPosition);
 	mSceneLayers[Air]->attachChild(std::move(leader));
 	
+	// Add enemy aircrafts
+	addEnemies();
+}
+
+void World::addEnemies() {
+	// Add enemies to the spawn point container
+	addEnemy(Aircraft::Raptor,    0.f,  500.f);
+	addEnemy(Aircraft::Raptor,    0.f, 1000.f);
+	addEnemy(Aircraft::Raptor, +100.f, 1100.f);
+	addEnemy(Aircraft::Raptor, -100.f, 1100.f);
+	addEnemy(Aircraft::Avenger, -70.f, 1400.f);
+	addEnemy(Aircraft::Avenger, -70.f, 1600.f);
+	addEnemy(Aircraft::Avenger,  70.f, 1400.f);
+	addEnemy(Aircraft::Avenger,  70.f, 1600.f);
+	
+	// Sort all enemies according to their y value, such that lower enemies are
+	// checked first for spawning
+	std::sort(mEnemySpawnPoints.begin(), mEnemySpawnPoints.end(), 
+			[](SpawnPoint lhs, SpawnPoint rhs) {
+				return lhs.y < rhs.y;
+			});
+}
+
+void World::addEnemy(Aircraft::Type type, float relX, float relY) {
+	SpawnPoint spawn(type, mSpawnPosition.x + relX, mSpawnPosition.y - relY);
+	mEnemySpawnPoints.push_back(spawn);
 }
 
 void World::adaptPlayerPosition() {
@@ -102,6 +137,9 @@ void World::update(sf::Time dt) {
 		mSceneGraph.onCommand(mCommandQueue.pop(), dt);
 	adaptPlayerVelocity();
 
+	// Remove all destroyed entities, create new ones
+	spawnEnemies();
+
 	// Regular update step, adapt position(correct if outside view)
 	mSceneGraph.update(dt,mCommandQueue);
 	adaptPlayerPosition();
@@ -112,3 +150,32 @@ CommandQueue& World::getCommandQueue() {
 	return mCommandQueue;
 }
 
+void World::spawnEnemies() {
+	while(!mEnemySpawnPoints.empty()
+			&& mEnemySpawnPoints.back().y > getBattlefieldBounds().top) {
+		SpawnPoint spawn = mEnemySpawnPoints.back();
+		
+		std::unique_ptr<Aircraft> enemy(
+				new Aircraft(spawn.type, mTextures, mFonts));
+		enemy->setPosition(spawn.x, spawn.y);
+		enemy->setRotation(180.f);
+
+		mSceneLayers[Air]->attachChild(std::move(enemy));
+		
+		mEnemySpawnPoints.pop_back();
+	}
+}
+
+sf::FloatRect World::getViewBounds() const {
+	return sf::FloatRect(mWorldView.getCenter() - mWorldView.getSize() / 2.f,
+			mWorldView.getSize());
+}
+
+sf::FloatRect World::getBattlefieldBounds() const {
+	// Return view bounds = same area at top, where enemies spawn
+	sf::FloatRect bounds = getViewBounds();
+	bounds.top -= 100.f;
+	bounds.height += 100.f;
+
+	return bounds;
+}

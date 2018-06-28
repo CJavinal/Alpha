@@ -23,14 +23,28 @@ class World : private sf::NonCopyable {
 		CommandQueue&		getCommandQueue();
 	private:
 		void				loadTextures();
-		void				buildScene();
 		void				adaptPlayerVelocity();
 		void				adaptPlayerPosition();
+
+		void				buildScene();
+		void				addEnemies();
+		void				addEnemy(Aircraft::Type type, float relX, float relY);
+
+		void				spawnEnemies();
+		sf::FloatRect		getViewBounds() const;
+		sf::FloatRect		getBattlefieldBounds() const;
 	private:
 		enum Layer {
 			Background,
 			Air,
 			LayerCount
+		};
+		struct SpawnPoint {
+			SpawnPoint(Aircraft::Type type, float x, float y) 
+				: type(type), x(x), y(y) { }
+			Aircraft::Type	type;
+			float			x;
+			float			y;
 		};
 	private:
 		
@@ -47,6 +61,8 @@ class World : private sf::NonCopyable {
 		sf::Vector2f						mSpawnPosition;
 		float								mScrollSpeed;
 		Aircraft*							mPlayerAircraft;
+
+		std::vector<SpawnPoint>				mEnemySpawnPoints;
 };
 
 #endif // World_HPP_INCLUDED
