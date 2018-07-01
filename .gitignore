@@ -1,5 +1,9 @@
 *.o
 *.lib
 *.swp
+<<<<<<< HEAD
 bin/eagle
+=======
+eagle
+>>>>>>> c4feb37ea6f30617834743b309121d34c1fa0705
 
