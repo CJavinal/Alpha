@@ -13,6 +13,10 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include <set>
+#include <utility>
+
+
 struct Command;
 class CommandQueue;
 
@@ -21,6 +25,8 @@ class SceneNode :	public sf::Transformable, public sf::Drawable,
 {
 	public:
 		typedef std::unique_ptr<SceneNode> Ptr;
+		typedef std::pair<SceneNode*, SceneNode*> Pair;
+
 	public:
 		explicit			SceneNode(Category::Type = Category::None);
 
@@ -29,11 +35,16 @@ class SceneNode :	public sf::Transformable, public sf::Drawable,
 
 		void				update(sf::Time dt, CommandQueue& commands);
 
-		sf::Transform		getWorldTransform() const;
 		sf::Vector2f		getWorldPosition() const;
+		sf::Transform		getWorldTransform() const;
 
-		virtual unsigned	getCategory() const;
 		void				onCommand(const Command& command, sf::Time dt);
+		virtual unsigned	getCategory() const;
+
+		void					removeWrecks();
+		virtual sf::FloatRect	getBoundingRect() const;
+		virtual bool			isMarkedForRemoval() const;
+		virtual bool			isDestroyed() const;
 	private:
 		virtual void		updateCurrent(sf::Time dt, CommandQueue& commands);
 		void				updateChildren(sf::Time dt, CommandQueue& commands);
